@@ -86,12 +86,12 @@ CREATE TABLE paciente (
     apellidoPaterno VARCHAR(100) NOT NULL,
     apellidoMaterno VARCHAR(100) NULL,
     fechaNacimiento date not null,
-
+    correo VARCHAR(100) NOT NULL UNIQUE,
     CONSTRAINT pk_paciente
     PRIMARY KEY(idPaciente)
 );
 
-INSERT INTO paciente (nombre, apellidoPaterno, apellidoMaterno,fechaNacimiento) VALUES ('Juan', 'Martínez', 'López','25-02-20');
+INSERT INTO paciente (nombre, apellidoPaterno, apellidoMaterno,fechaNacimiento,correo) VALUES ('Juan', 'Martínez', 'López','25-02-20','juan.lopez@example.com');
 
 CREATE TABLE consulta (
     idConsulta INT NOT NULL AUTO_INCREMENT,

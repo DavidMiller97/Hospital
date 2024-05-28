@@ -17,7 +17,7 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link" href="/Hospital/views/doctores/altas.php">Doctores</a>
-                <a class="nav-link" href="#">Pacientes</a>
+                <a class="nav-link" href="/Hospital/views/pacientes/registrarPaciente.php">Pacientes</a>
                 <a class="nav-link" href="#">Medicamentos</a>
             </div>
             </div>
