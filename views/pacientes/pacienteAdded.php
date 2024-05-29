@@ -17,10 +17,13 @@ echo "Correo: <b>".$correoPac."</b><BR>";
 
 	$sql="call Pacientes_insert('".$nombre."','".$apellidoPat."','".$apellidoMat."','".$fechaNac."','".$correoPac."')";
 
-	$mysqli -> query($sql);
-	echo "Registro agregado";
-	$mysqli -> close();
+	try {
+		$mysqli -> query($sql);
+		echo "Registro agregado";
 
+} catch (mysqli_sql_exception $th) {
+		echo "El correo ya existe";
+	}
 ?>
 
 <?php include("../layout/footer.php") ?>

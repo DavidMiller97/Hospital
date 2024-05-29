@@ -143,3 +143,19 @@ CREATE TABLE detallesReceta (
 );
 
 INSERT INTO detallesReceta (idReceta, idMedicamento, descripcion) VALUES (1, 1,'Tomar una pastilla después de cada comida.');
+
+
+-- Procedures
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Pacientes_insert`( IN `nombre` TEXT,  IN `apellidoPat` TEXT, IN `apellidoMat` TEXT, IN `fechaNac` TEXT, IN `correoPac` TEXT
+)
+BEGIN
+    IF NOT EXISTS (SELECT idPaciente FROM paciente WHERE correo = correoPac) THEN
+        INSERT INTO paciente (nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, correo)
+        VALUES (nombre, apellidoPat, apellidoMat, fechaNac, correoPac);
+    ELSE
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El paciente ya se encuentra registrado';
+    END IF;
+END$$
+DELIMITER ;
