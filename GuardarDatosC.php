@@ -1,8 +1,8 @@
 <?php require_once 'views/layout/header.php'; ?>
 
 <?php
-if (!isset($_POST["paciente"], $_POST["padecimiento"],$_POST["indicaciones"],$_POST["comentarios"],$_POST["medicamento"])) {
-   die("Error: Los datos requeridos no están presentes.");
+if (!isset($_POST["paciente"], $_POST["padecimiento"], $_POST["indicaciones"], $_POST["comentarios"], $_POST["medicamento"])) {
+    die("Error: Los datos requeridos no están presentes.");
 }
 
 $paciente = $_POST["paciente"];
@@ -17,33 +17,37 @@ $dbuser = 'root';
 $dbpass = '';
 $dbname = 'hospital';
 
-$conexion = mysqli_connect($dbhost, $dbuser, $dbpass,$dbname);
+$conexion = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 
-$insertConsulta = "INSERT INTO consulta (idPaciente,idMedico,fecha,padecimiento) VALUES ('".$paciente."','".$paciente."','".$fecha."','".$padecimiento."')";  
+if (!$conexion) {
+    die("Error de conexión: " . mysqli_connect_error());
+}
+
+$insertConsulta = "INSERT INTO consulta (idPaciente, idMedico, fecha, padecimiento) VALUES ('$paciente', '1', '$fecha', '$padecimiento')";
 
 if (mysqli_query($conexion, $insertConsulta)) {
-
     $idConsulta = mysqli_insert_id($conexion);
     
     $insertReceta = "INSERT INTO receta (idConsulta, fecha, indicaciones, comentarios) VALUES ('$idConsulta', '$fecha', '$indicaciones', '$comentarios')";
 
     if (mysqli_query($conexion, $insertReceta)) {
-        echo "Información registrada exitosamente.";
+        $idReceta = mysqli_insert_id($conexion);
+        
+        $insertDetalle = "INSERT INTO detallesReceta (idReceta,idMedicamento) VALUES ('$idReceta','$medicamento')";
+        
+        if (mysqli_query($conexion, $insertDetalle)) {
+            echo "Datos insertados correctamente";
+        } else {
+            echo "Error al insertar en la tabla detallesReceta: " . mysqli_error($conexion);
+        }
     } else {
         echo "Error al insertar en la tabla receta: " . mysqli_error($conexion);
     }
-
-}  else {
+} else {
     echo "Error al insertar en la tabla consulta: " . mysqli_error($conexion);
 }
 
-$sql = "SELECT * FROM ";  
-
-// Cierra la conexión
 mysqli_close($conexion);
-
-
-
 ?>
 
 <?php require_once 'views/layout/footer.php'; ?>

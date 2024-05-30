@@ -123,7 +123,7 @@ CREATE TABLE detallesReceta (
     FOREIGN KEY (idMedicamento) REFERENCES medicamento(idMedicamento)
 );
 
-INSERT INTO detallesReceta (idReceta, idMedicamento, descripcion) VALUES (1, 1,);
+INSERT INTO detallesReceta (idReceta, idMedicamento) VALUES (1, 1);
 
 
 -- Procedures
