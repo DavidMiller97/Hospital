@@ -115,7 +115,6 @@ INSERT INTO receta (idConsulta,fecha, indicaciones, comentarios) VALUES (1,'2024
 CREATE TABLE detallesReceta (
     idReceta INT NOT NULL,
     idMedicamento INT NOT NULL,
-    descripcion VARCHAR(255) NULL,
 
     PRIMARY KEY(idReceta, idMedicamento),
     CONSTRAINT fk_detallesReceta_receta
@@ -124,7 +123,7 @@ CREATE TABLE detallesReceta (
     FOREIGN KEY (idMedicamento) REFERENCES medicamento(idMedicamento)
 );
 
-INSERT INTO detallesReceta (idReceta, idMedicamento, descripcion) VALUES (1, 1,'Tomar una pastilla después de cada comida.');
+INSERT INTO detallesReceta (idReceta, idMedicamento, descripcion) VALUES (1, 1,);
 
 
 -- Procedures
