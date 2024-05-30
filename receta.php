@@ -1,101 +1,114 @@
 <?php
 
-$fecha = date('Y-m-d');
-
 require_once 'fpdf186/fpdf.php';
 
-$pdf = new FPDF();
- 
+class PDF extends FPDF {
+    function Header() {
+        // Logo
+        // $this->Image('logo.png',10,6,30);
+        // Arial bold 15
+        $this->SetFont('Arial','B',16);
+        // Movernos a la derecha
+        $this->Cell(80);
+        // Título
+        $this->Cell(30,10,'Receta Medica',0,0,'C');
+        // Salto de línea
+        $this->Ln(20);
+    }
+    
+    function Footer() {
+        // Posición a 1.5 cm del final
+        $this->SetY(-15);
+        // Arial itálica 8
+        $this->SetFont('Arial','I',8);
+        // Número de página
+        $this->Cell(0,10,'Pagina '.$this->PageNo().'/{nb}',0,0,'C');
+    }
+}
+
+// Creación del objeto de la clase heredada
+$pdf = new PDF();
+$pdf->AliasNbPages();
 $pdf->AddPage();
-
-$pdf->SetFont('Arial','B',16);
-$pdf->SetXY(80,10);
-$pdf->Cell(50,0,utf8_decode('Receta'),0,0,'C',true);
-
-$pdf->SetFont('Arial','B',14);
-$pdf->SetXY(150,10);
-$pdf->Cell(50,0,$fecha,0,0,'C',true);
-
-$idga = $_POST["idgat"];
+$pdf->SetFont('Arial','',12);
 
 $dbhost = 'localhost';
 $dbuser = 'root';
 $dbpass = '';
-$dbname = 'Adopciones';
+$dbname = 'hospital';
 
-$conexion = mysqli_connect($dbhost, $dbuser, $dbpass,$dbname);
+$idConsulta = $_POST['idConsulta'];
+$fecha = date('Y-m-d');
 
-$consult = "SELECT * FROM adoptante ad INNER JOIN adopciones a on ad.id=a.idAdoptante INNER JOIN Gatos g ON a.idGato = g.id and g.id = $idga ";
+$conexion = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 
-$result = mysqli_query($conexion,$consult);
+if (!$conexion) {
+    die("Error de conexión: " . mysqli_connect_error());
+}
 
-while($row = mysqli_fetch_assoc($result)){
-    $pdf->SetFont('Arial','',12);
+$consult = "
+SELECT 
+    CONCAT(paciente.nombre, ' ', paciente.apellidopaterno, ' ', paciente.apellidoMaterno) AS paciente,
+    CONCAT(medico.nombre, ' ', medico.apellidoPa, ' ', medico.apellidoMa) AS medico,
+    consulta.padecimiento as padecimiento,
+    receta.indicaciones as indicaciones,
+    receta.comentarios as comentario,
+    medicamento.nombre AS medicamento
+FROM 
+    receta
+    JOIN consulta ON consulta.idConsulta = receta.idConsulta
+    JOIN paciente ON consulta.idPaciente = paciente.idPaciente
+    JOIN medico ON consulta.idMedico = medico.idmedico
+    JOIN detallesReceta ON receta.idReceta = detallesReceta.idReceta
+    JOIN medicamento ON detallesReceta.idMedicamento = medicamento.idMedicamento
+WHERE 
+    consulta.idConsulta = $idConsulta
+";
 
-    $pdf->SetXY(21,30);
-    $pdf->Cell(50,0,utf8_decode('Adoptante:'),0,0,'C',true);
-    $pdf->SetXY(40,30);
-    $pdf->Cell(50,0,$row['nombre'],0,0,'C',true);
-    $pdf->SetXY(55,30);
-    $pdf->Cell(50,0,$row['apepat'],0,0,'C',true);
-    $pdf->SetXY(70,30);
-    $pdf->Cell(50,0,$row['apemat'],0,0,'C',true);
+$result = mysqli_query($conexion, $consult);
 
-    $pdf->SetXY(20,40);
-    $pdf->Cell(50,0,utf8_decode('Dirección:'),0,0,'C',true);
-    $pdf->SetXY(50,40);
-    $pdf->Cell(50,0,$row['direccion'],0,0,'C',true);
-    $pdf->SetXY(75,40);
-    $pdf->Cell(50,0,$row['ciudad'],0,0,'C',true);
-    $pdf->SetXY(105,40);
-    $pdf->Cell(50,0,$row['estado'],0,0,'C',true);
-    $pdf->SetXY(130,40);
-    $pdf->Cell(50,0,$row['codigoPostal'],0,0,'C',true);
+if (!$result) {
+    die("Error en la consulta: " . mysqli_error($conexion));
+}
 
-    $pdf->SetXY(25,50);
-    $pdf->Cell(50,0,utf8_decode('Datos del Gato:'),0,0,'C',true);
-    $pdf->SetXY(25,60);
-    $pdf->Cell(50,0,utf8_decode('Nombre:'),0,0,'C',true);
-    $pdf->Cell(50,0,$row['Nombre'],0,0,'C',true);
-    $pdf->SetXY(29,70);
-    $pdf->Cell(50,0,utf8_decode('Edad (Años):'),0,0,'C',true);
-    $pdf->Cell(50,0,$row['Edad'],0,0,'C',true);
-
-    $pdf->SetXY(35,80);
-    $pdf->Cell(50,0,utf8_decode('Fecha de adopción:'),0,0,'C',true);
-    $pdf->Cell(50,0,$row['fecha'],0,0,'C',true);
-
-    $pdf->SetFont('Arial','B',14);
-    $pdf->SetXY(90,100);
-    $pdf->Cell(50,0,utf8_decode('Muchas Gracias por ayudar a tu gatito a tener una mejor vida.'),0,0,'C',true);
-
-    $pdf->SetFont('Arial','B',10);
-    $pdf->SetXY(85,115);
-    $pdf->Cell(50,0,utf8_decode('_______________________________'),0,0,'C',true);
-    $pdf->SetXY(85,120);
-    $pdf->Cell(50,0,utf8_decode('Firma de la organización'),0,0,'C',true);
-
-    $pdf->SetFont('Arial','B',10);
-    $pdf->SetXY(85,140);
-    $pdf->Cell(50,0,utf8_decode('_______________________________'),0,0,'C',true);
-    $pdf->SetXY(85,145);
-    $pdf->Cell(50,0,utf8_decode('Firma del adoptante'),0,0,'C',true);
-
-    $pdf->SetFont('Arial','B',10);
-    $pdf->SetXY(85,170);
-    $pdf->Cell(50,0,utf8_decode('_______________________________'),0,0,'C',true);
-    $pdf->SetXY(85,175);
-    $pdf->Cell(50,0,utf8_decode('Huellita de tu gatito'),0,0,'C',true);
+while ($row = mysqli_fetch_assoc($result)) {
+    $pdf->SetFont('Arial', 'B', 12);
+    $pdf->Cell(0, 10, utf8_decode('Fecha de consulta: ') . $fecha, 0, 1);
     
-
-    $pdf->SetFont('Arial','',10);
-    $pdf->SetXY(85,200);
-    $pdf->Cell(50,0,utf8_decode('La validez de este documento es de un año por lo que deberas de renovarlo,'),0,0,'C',true);
-    $pdf->SetXY(85,210);
-    $pdf->Cell(50,0,utf8_decode('recuerda asistir a la organización junto con tu gatito a firmar.'),0,0,'C',true);
+    $pdf->SetFont('Arial', 'B', 12);
+    $pdf->Cell(0, 10, utf8_decode('Paciente:'), 0, 1);
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->Cell(0, 10, utf8_decode($row['paciente']), 0, 1);
     
+    $pdf->SetFont('Arial', 'B', 12);
+    $pdf->Cell(0, 10, utf8_decode('Medico:'), 0, 1);
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->Cell(0, 10, utf8_decode($row['medico']), 0, 1);
+    
+    $pdf->SetFont('Arial', 'B', 12);
+    $pdf->Cell(0, 10, utf8_decode('Padecimiento:'), 0, 1);
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->MultiCell(0, 10, utf8_decode($row['padecimiento']), 0, 1);
+    
+    $pdf->SetFont('Arial', 'B', 12);
+    $pdf->Cell(0, 10, utf8_decode('Indicaciones:'), 0, 1);
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->MultiCell(0, 10, utf8_decode($row['indicaciones']), 0, 1);
+    
+    $pdf->SetFont('Arial', 'B', 12);
+    $pdf->Cell(0, 10, utf8_decode('Comentarios:'), 0, 1);
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->MultiCell(0, 10, utf8_decode($row['comentario']), 0, 1);
+    
+    $pdf->SetFont('Arial', 'B', 12);
+    $pdf->Cell(0, 10, utf8_decode('Medicamento:'), 0, 1);
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->MultiCell(0, 10, utf8_decode($row['medicamento']), 0, 1);
+    
+    $pdf->SetFont('Arial', 'B', 10);
+    $pdf->Cell(0, 30, utf8_decode('_______________________________'), 0, 1, 'C');
+    $pdf->Cell(0, 10, utf8_decode('Firma médica'), 0, 1, 'C');
 }
 
 $pdf->Output();
-
 ?>

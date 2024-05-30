@@ -140,9 +140,15 @@ if (!$result) {
         });
     </script>
       <div class="container mt-5">
-        <a href="receta.php" class="btn btn-primary">Imprimir Receta</a>
+      
+    <div class="container mt-5">
+        <form action="receta.php" method="post" style="display: inline;">
+            <input type="hidden" name="idConsulta" value="<?php echo ($idConsulta);?>">
+            <button type="submit" class="btn btn-primary">Imprimir Receta</button>
+        </form>
     </div>
 
+</div>
 </body>
 </html>
 

@@ -7,11 +7,10 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="text-center">
-                            <h1>Consulta Médica</h1> <!-- Se centra este h1 -->
+                            <h1>Consulta Médica</h1>
                             <div class="form-group">
                             <p class="card-text">
                             <?php
-                            // Obtener la fecha del sistema
                             echo date('d-m-Y H:i:s');
                             ?>
                             </p>
