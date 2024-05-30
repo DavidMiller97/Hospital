@@ -43,18 +43,18 @@ INSERT INTO Farmacia (nombre, descripcion) VALUES ('Vacuna C', 'Inmunización co
 
 CREATE TABLE medicamento (
     idMedicamento INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR (255),
+    nombre Varchar(255),
     fechaCaducidad DATE NOT NULL,
     precio DECIMAL(10, 2) NOT NULL,
     ingredientes VARCHAR(255) NULL,
     descripcion VARCHAR(255) NULL
 );
 
-INSERT INTO medicamento (fechaCaducidad, precio, ingredientes, descripcion) VALUES ('2024-06-30', 25.99, 'Ibuprofeno, Paracetamol', 'Medicamento para el alivio del dolor.');
-INSERT INTO medicamento (fechaCaducidad, precio, ingredientes, descripcion) VALUES ('2024-08-15', 15.50, 'Ácido Acetilsalicílico, Cafeína', 'Analgésico y estimulante.');
-INSERT INTO medicamento (fechaCaducidad, precio, ingredientes, descripcion) VALUES ('2024-07-20', 10.75, 'Penicilina', 'Antibiótico de amplio espectro.');
-INSERT INTO medicamento (fechaCaducidad, precio, ingredientes, descripcion) VALUES ('2024-09-10', 30.25, 'Lidocaína, Epinefrina', 'Anestésico local.');
-INSERT INTO medicamento (fechaCaducidad, precio, ingredientes, descripcion) VALUES ('2024-10-05', 18.99, 'Salbutamol', 'Broncodilatador para el tratamiento del asma.');
+INSERT INTO medicamento (nombre,fechaCaducidad, precio, ingredientes, descripcion) VALUES ("MEDIPLUS",'2024-06-30', 25.99, 'Ibuprofeno, Paracetamol', 'Medicamento para el alivio del dolor.');
+INSERT INTO medicamento (nombre,fechaCaducidad, precio, ingredientes, descripcion) VALUES ("JARABE",'2024-08-15', 15.50, 'Ácido Acetilsalicílico, Cafeína', 'Analgésico y estimulante.');
+INSERT INTO medicamento (nombre,fechaCaducidad, precio, ingredientes, descripcion) VALUES ("PARACETAMOL",'2024-07-20', 10.75, 'Penicilina', 'Antibiótico de amplio espectro.');
+INSERT INTO medicamento (nombre,fechaCaducidad, precio, ingredientes, descripcion) VALUES ("IBUPROFENO",'2024-09-10', 30.25, 'Lidocaína, Epinefrina', 'Anestésico local.');
+INSERT INTO medicamento (nombre,fechaCaducidad, precio, ingredientes, descripcion) VALUES ("SIMI JARABE",'2024-10-05', 18.99, 'Salbutamol', 'Broncodilatador para el tratamiento del asma.');
 
 CREATE TABLE detalleFarmacia (
     idMedicamento INT NOT NULL,
