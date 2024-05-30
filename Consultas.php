@@ -82,21 +82,13 @@
                             <div class="btn-group" role="group">
                             <button type="submit" class="btn btn-primary">Guardar consulta</button>
                             </div>
+                            <div class="btn-group mr-2" role="group">
+                              <button onclick="history.back()" class="btn btn-secondary">Volver</button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <br>
-
-    <div class="container mt-5 d-flex justify-content-end">
-        <div class="btn-group mr-2" role="group">
-            <button onclick="history.back()" class="btn btn-secondary">Volver</button>
-        </div>
-        <div class="btn-group" role="group">
-            <a href="destino.php" class="btn btn-primary">Imprimir receta</a>
         </div>
     </div>
 
