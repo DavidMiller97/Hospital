@@ -50,6 +50,7 @@ INSERT INTO Farmacia (nombre, descripcion) VALUES ('Vacuna C', 'Inmunización co
 
 CREATE TABLE medicamento (
     idMedicamento INT NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR (255),
     fechaCaducidad DATE NOT NULL,
     precio DECIMAL(10, 2) NOT NULL,
     ingredientes VARCHAR(255) NULL,
