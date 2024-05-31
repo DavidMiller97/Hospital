@@ -56,6 +56,10 @@ if (!$resultado) {
                 ?>
             </tbody>
         </table>
+
+        <div class="container mt-5">
+        <a href="http://localhost/hospital/views/consultas/AddMedicamentos.php" class="btn btn-primary">Agregaar medicamento</a>
+        </div>
     </div>
 </body>
 </html>
