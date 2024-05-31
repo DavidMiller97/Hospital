@@ -1,6 +1,12 @@
 <?php
 // Incluimos el archivo de conexión a la base de datos
 require_once "../db/db.php";
+require_once("../layout/header.php");
+require_once("../../helpers/helpers.php");
+
+if(!isLogin()){
+    header("Location: http://localhost/hospital/views/login/login.php");
+}
 
 // Consulta SQL para obtener los medicamentos
 $sql = "SELECT idMedicamento, nombre, fechaCaducidad, precio, ingredientes, descripcion FROM medicamento";
@@ -14,15 +20,7 @@ if (!$resultado) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulta de Medicamentos</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
-<body>
+
     <div class="container mt-5">
         <h1 class="text-center">Consulta de Medicamentos</h1>
         <table class="table table-striped">
