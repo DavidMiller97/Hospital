@@ -34,6 +34,12 @@
 
 </div>
 
+<br>
+
+  <div class="container mt-5">
+        <a href="consultas.php" class="btn btn-primary">Nueva Consulta</a>
+    </div>
+
 
 <?php require_once 'views/layout/footer.php'; ?>
 
