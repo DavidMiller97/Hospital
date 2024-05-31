@@ -12,13 +12,13 @@ INSERT INTO especialidad (nombre) VALUES ("Medicina General");
 
 CREATE TABLE medico (
     idMedico INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL,
-    apellidoPa VARCHAR(50) NOT NULL,
-    apellidoMa VARCHAR(50) NULL,
-    telefono VARCHAR(25) NULL,
+    nombre VARCHAR(150) NOT NULL,
+    apellidoPa VARCHAR(150) NOT NULL,
+    apellidoMa VARCHAR(150) NULL,
+    telefono VARCHAR(10) NULL,
     cedula VARCHAR(100) NOT NULL,
     correo VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
+    password VARCHAR(100) NOT NULL,
     admin boolean not null,
     idEspecialidad int not null,
 
@@ -73,9 +73,9 @@ INSERT INTO detalleFarmacia (idMedicamento, idFarmacia, cantidad) VALUES (1, 1, 
 
 CREATE TABLE paciente (
     idPaciente INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    apellidoPaterno VARCHAR(100) NOT NULL,
-    apellidoMaterno VARCHAR(100) NULL,
+    nombre VARCHAR(150) NOT NULL,
+    apellidoPaterno VARCHAR(150) NOT NULL,
+    apellidoMaterno VARCHAR(150) NULL,
     fechaNacimiento date not null,
     correo VARCHAR(100) NOT NULL UNIQUE
 );
@@ -96,8 +96,6 @@ CREATE TABLE consulta (
 );
 
 INSERT INTO consulta (idPaciente,idMedico,fecha,padecimiento) VALUES (1,1,'2025-02-12','infeccion de garganta');
-
-
 
 CREATE TABLE receta (
     idReceta INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
