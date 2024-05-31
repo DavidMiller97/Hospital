@@ -9,6 +9,7 @@ $cedula = $_POST['cedula'];
 $email = $_POST['email'];
 $especialidad = strtolower($_POST['especialidad']);
 isset($_POST['admin']) ? $admin = 1 : $admin = 0;
+$contrasena = $_POST['contrasena'];
 
 $get_especialidad = "SELECT idEspecialidad FROM especialidad WHERE LOWER(nombre) LIKE '%$especialidad%'";
 
@@ -23,7 +24,7 @@ if ($result->num_rows == 0) {
   $id_especialidad = $row['idEspecialidad'];
   }
 
-$query = "INSERT INTO medico(nombre, apellidoPa, apellidoMa, telefono, cedula, correo, password, admin, idEspecialidad) VALUES ('$nombre', '$ape_pat', '$ape_mat', '$telefono', '$cedula', '$email','12345',$admin, $id_especialidad);";
+$query = "INSERT INTO medico(nombre, apellidoPa, apellidoMa, telefono, cedula, correo, password, admin, idEspecialidad) VALUES ('$nombre', '$ape_pat', '$ape_mat', '$telefono', '$cedula', '$email','$contrasena',0, $id_especialidad);";
 try {
     $result = $mysqli -> query($query);
     $_SESSION['message'] = 'Doctor registrado ';

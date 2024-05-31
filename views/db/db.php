@@ -2,10 +2,10 @@
 session_start();
 
 $mysqli = new mysqli(
-  'localhost',
-  'root',
-  'usbw',
-  'hospital'
+  '127.0.0.1',
+  'davidPHP',
+  'IGotAllTheTimeInTheWorld21',
+  'hospital', 3306
 );
 
 if ($mysqli -> connect_errno){

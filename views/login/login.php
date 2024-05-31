@@ -1,3 +1,9 @@
+<?php require_once '../../helpers/helpers.php'; ?>
+<?php require_once '../db/db.php'; ?>
+<?php if(isset($_SESSION['usuario']) && !empty($_SESSION['usuario'])){
+    header("Location: http://localhost/Hospital/index.php");    
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +16,12 @@
 <body style="height: 100vh;">
     <div class="container d-flex justify-content-center align-items-center w-100 h-100 flex-column">
         <h1 class="mb-5">Ingresa a la APP para doctores</h1>
-        <form>
+        <div>
+            <?php if(isset($_SESSION) && !empty($_SESSION['error'])): ?>        
+                <div class="alert alert-danger"><?=$_SESSION['error']?></div>                
+            <?php endif;?>
+        </div>
+        <form method="post" action="ingresar.php">
             <div class="mb-3">
                 <label for="correo" class="form-label">Correo</label>
                 <input type="email" class="form-control" id="correo" name="correo">
@@ -22,6 +33,7 @@
 
             <button type="submit" class="btn btn-primary w-100">Enviar</button>
         </form>
+        <?php clearSession("error");?>
     </div>
 </body>
 </html>

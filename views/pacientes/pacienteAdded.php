@@ -1,17 +1,11 @@
-<?php include("../db/db.php") ?>
-<?php include("../layout/header.php") ?>
-<?php
+<?php require_once("../db/db.php");
+
+
 $nombre=$_POST['nombre'];
 $apellidoPat=$_POST['apellidoPat'];
 $apellidoMat=$_POST['apellidoMat'];
 $fechaNac=$_POST['fechaNac'];
 $correoPac=$_POST['correoPac'];
-
-echo "Nombre: <b>".$nombre."</b><BR>";
-echo "Apellido Paterno: <b>".$apellidoPat."</b><BR>";
-echo "apellido Materno: <b>".$apellidoMat."</b><BR>";
-echo "Fecha de Nacimiento: <b>".$fechaNac."</b><BR>";
-echo "Correo: <b>".$correoPac."</b><BR>";
 
 
 
@@ -19,11 +13,16 @@ echo "Correo: <b>".$correoPac."</b><BR>";
 
 	try {
 		$mysqli -> query($sql);
-		echo "Registro agregado";
+		$_SESSION['message'] = 'Paciente registrado ';
+    $_SESSION['message_type'] = 'success';
+    header("Location: registrarPaciente.php");
+
 
 } catch (mysqli_sql_exception $th) {
-		echo "El correo ya existe";
+	$_SESSION['message'] = 'Error al registrar al paciente ';
+    $_SESSION['message_type'] = 'error';
+    header("Location: registrarPaciente.php");
+
+
 	}
 ?>
-
-<?php include("../layout/footer.php") ?>

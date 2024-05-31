@@ -1,4 +1,28 @@
-<?php include("../layout/header.php") ?>
+<?php require_once("../db/db.php") ?>
+<?php require_once("../layout/header.php") ?>
+<?php require_once("../../helpers/helpers.php") ?>
+<?php 
+    if(!isLogin()){
+        header("Location: http://localhost/hospital/views/login/login.php");
+    }
+?>
+
+<?php if (isset($_SESSION['message_type'])): ?>
+    <?php if ($_SESSION['message_type'] == "success"): ?>
+        <div class="alert alert-success alert-dismissible fade show snackbar-dao" role="alert">
+            <?= $_SESSION['message'] ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <?php clearSession('message_type'); ?>
+    <?php elseif ($_SESSION['message_type'] == "error"): ?>
+        <div class="alert alert-danger alert-dismissible fade show snackbar-dao" role="alert">
+            <?= $_SESSION['message'] ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+    <?php clearSession('message_type');?>
+    <?php endif; ?>
+<?php endif; ?>
 
     <div class="container d-flex justify-content-center align-items-center w-80 h-80 flex-column">
         <h1 class="mb-5">Registrar Paciente</h1>

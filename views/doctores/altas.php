@@ -1,5 +1,11 @@
-<?php include("../db/db.php") ?>
-<?php include("../layout/header.php") ?>
+<?php require_once("../db/db.php") ?>
+<?php require_once("../layout/header.php") ?>
+<?php require_once("../../helpers/helpers.php") ?>
+<?php 
+    if(!isLogin() || !isAdmin()){
+        header("Location: http://localhost/hospital/views/login/login.php");
+    }
+?>
 
 <?php if (isset($_SESSION['message_type'])) {
   if ($_SESSION['message_type'] == "success") { ?>
@@ -7,14 +13,14 @@
     <?= $_SESSION['message'] ?>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
  </div>
-<?php session_unset();
+<?php clearSession('message_type');
   } elseif ($_SESSION['message_type'] == "error") { ?>
 <div class="alert alert-danger alert-dismissible fade show snackbar-dao" role="alert">
     <?= $_SESSION['message'] ?>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
-<?php session_unset();
+<?php clearSession('message_type');
   }
 }  ?>
 
@@ -65,20 +71,20 @@
                 </div>
             </div>
             <div class="col-sm-12 col-lg-6">
+                <label for="exampleInputEmail1" class="form-label">Contraseña</label>
+                <div class="input-group mb-3">
+                    <input type="password" name="contrasena" class="form-control" placeholder="Contraseña" aria-label="Contraseña"
+                        required>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-6">
                 <div class="mb-3 ">
                     <label for="validationDefaultUsername" class="form-label">Especialidad</label>
                     <input type="text" name="especialidad" class="form-control" id="validationDefaultUsername"
                         aria-describedby="emailHelp" required>
                 </div>
             </div>
-            <div class="col-12">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="admin" value="1" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Admin
-                    </label>
-                </div>
-            </div>
+            
             <div class="col-12">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>

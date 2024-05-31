@@ -10,20 +10,23 @@
 <body class="d-flex flex-column h-100">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.php">Hospital</a>
+            <a class="navbar-brand" href="http://localhost/Hospital/index.php">Hospital</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link" href="/Hospital/views/doctores/altas.php">Doctores</a>
+                <?php if($_SESSION['usuario']['isAdmin']): ?>
+                    <a class="nav-link" href="/Hospital/views/doctores/altas.php">Doctores</a>
+                <?php endif; ?>
                 <a class="nav-link" href="/Hospital/views/pacientes/registrarPaciente.php">Pacientes</a>
                 <a class="nav-link" href="#">Medicamentos</a>
             </div>
             </div>
             <span class="navbar-text">
-                david211910@gmail.com
+                <?=$_SESSION['usuario']['correo']?>
             </span>
+            <span class="navbar-text"><a href="http://localhost/Hospital/views/logout/logout.php">Cerrar sesion</a></span>
             </div>
         </div>
     </nav>
