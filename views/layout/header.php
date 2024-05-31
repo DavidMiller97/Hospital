@@ -20,7 +20,7 @@
                     <a class="nav-link" href="/Hospital/views/doctores/altas.php">Doctores</a>
                 <?php endif; ?>
                 <a class="nav-link" href="/Hospital/views/pacientes/registrarPaciente.php">Pacientes</a>
-                <a class="nav-link" href="#">Medicamentos</a>
+                <a class="nav-link" href="/Hospital/views/consultas/medicamento.php">Medicamentos</a>
             </div>
             </div>
             <span class="navbar-text">
