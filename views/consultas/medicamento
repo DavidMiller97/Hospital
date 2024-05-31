@@ -1,0 +1,65 @@
+<?php
+// Incluimos el archivo de conexión a la base de datos
+require_once "../db/db.php";
+
+// Consulta SQL para obtener los medicamentos
+$sql = "SELECT idMedicamento, nombre, fechaCaducidad, precio, ingredientes, descripcion FROM medicamento";
+
+// Ejecutamos la consulta
+$resultado = mysqli_query($mysqli, $sql);
+
+// Verificamos si la consulta tuvo éxito
+if (!$resultado) {
+    die("Error al obtener los medicamentos: " . mysqli_error($mysqli));
+}
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Medicamentos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Consulta de Medicamentos</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Fecha de Caducidad</th>
+                    <th>Precio</th>
+                    <th>Ingredientes</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                // Verificamos si hay resultados
+                if (mysqli_num_rows($resultado) > 0) {
+                    // Iteramos sobre cada fila de resultados
+                    while ($fila = mysqli_fetch_assoc($resultado)) {
+                        echo "<tr>";
+                        echo "<td>" . $fila['idMedicamento'] . "</td>";
+                        echo "<td>" . $fila['nombre'] . "</td>";
+                        echo "<td>" . $fila['fechaCaducidad'] . "</td>";
+                        echo "<td>" . $fila['precio'] . "</td>";
+                        echo "<td>" . $fila['ingredientes'] . "</td>";
+                        echo "<td>" . $fila['descripcion'] . "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    // Si no hay resultados, mostramos un mensaje
+                    echo "<tr><td colspan='6' class='text-center'>No hay medicamentos disponibles</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+<?php require_once '../layout/footer.php';?>
