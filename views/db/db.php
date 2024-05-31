@@ -2,9 +2,9 @@
 session_start();
 
 $mysqli = new mysqli(
-  '127.0.0.1',
-  'davidPHP',
-  'IGotAllTheTimeInTheWorld21',
+  'localhost',
+  'root',
+  'usbw',
   'hospital', 3306
 );
 
